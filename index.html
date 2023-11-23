@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap&family=Lato:ital,wght@0,300;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Los Angeles Mountains</title>
+    <style>
+      :root {
+        --footer-height: 3rem;
+        --header-height: 4rem;
+      }
+
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+        font-family: 'Lato', sans-serif;
+      }
+
+      /*section {
+        padding-top: var(--header-height);
+      }*/
+
+      .content {
+        max-width: 900px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 10;
+        height: var(--header-height);
+      }
+
+      header #menu-icon,
+      header #close-icon {
+        display: none;
+      }
+
+      header.scrolled {
+        background-color: white;
+        box-shadow: 2px 2px 5px 1px rgba(0, 0, 0, 0.2);
+      }
+
+      header.scrolled .content nav a {
+        color: #414f6b;
+      }
+
+      header .content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0.5rem 1rem;
+      }
+
+      header .content nav {
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+      }
+
+      header .content nav a {
+        color: white;
+        text-transform: uppercase;
+        font-style: italic;
+        text-underline-offset: 5px;
+        font-size: small;
+      }
+
+      #hero-section,
+      #history-section,
+      #teams-section {
+        height: 100vh;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+      }
+
+      #hero-section {
+        background-image: url(images/sky.jpg);
+        position: relative;
+      }
+
+      #hero-section .snow-flakes {
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 0;
+        overflow: hidden;
+      }
+
+      #hero-section .content {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        padding: 0.5em;
+      }
+
+      #hero-section .content img {
+        z-index: 1;
+        max-width: calc(100% - 1em);
+      }
+
+      #hero-section .foreground-mountain {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        top: 0;
+        background-image: url(images/hero-mountains.png);
+        background-repeat: no-repeat;
+        background-position: bottom center;
+        background-size: contain;
+        z-index: 2;
+      }
+
+      #teams-section {
+        height: calc(100vh - var(--footer-height));
+      }
+
+      section#history-section {
+        background-image: url(images/mountains.png);
+      }
+
+      section#teams-section {
+        background-image: url(images/schedule-bg.png);
+      }
+
+      .section-heading {
+        position: relative;
+        font-family: 'Oswald', sans-serif;
+      }
+
+      .section-heading h2 {
+        font-size: 6rem;
+        color: rgba(65, 79, 107, 0.6);
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+
+      .section-heading p {
+        position: absolute;
+        text-transform: uppercase;
+        font-weight: 700;
+        bottom: 1.5rem;
+        left: 6rem;
+        font-size: 1.4rem;
+        color: #414f6b;
+      }
+
+      #teams-section .section-heading p {
+        margin-left: 0.8rem;
+      }
+
+      #history-section .section-heading + p {
+        margin-top: -25px;
+        margin-left: 3rem;
+        color: #333;
+      }
+
+      #history-section {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #history-section .content:first-child {
+        flex-grow: 1;
+      }
+
+      #history-section .carousel {
+        background-color: rgb(66, 80, 107, 0.92);
+        padding: 1rem;
+      }
+
+      #history-section .carousel .slides {
+        margin-bottom: 1rem;
+        display: flex;
+        gap: 10px;
+      }
+
+      #history-section .carousel .slides div {
+        flex: 1 1 auto;
+      }
+
+      #history-section .carousel .slides img {
+        max-width: 100%;
+      }
+
+      #history-section .carousel .dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      #history-section .carousel .dots button {
+        display: inline-block;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.4);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+      }
+
+      #history-section .carousel .dots button.active {
+        background-color: white;
+      }
+
+      #teams-section > div:nth-child(1) {
+        background: white;
+      }
+
+      #teams-section > div:nth-child(1) .content:first-child {
+        display: flex;
+        align-items: center;
+      }
+
+      #teams-section > div:nth-child(1) .content:first-child > p {
+        margin-left: 4rem;
+      }
+
+      #teams-section .tabs {
+        background-color: #414f6b;
+      }
+
+      #teams-section .tabs .content {
+        display: flex;
+      }
+
+      #teams-section .tabs .content div {
+        padding: 0.3em 1em;
+        color: #b0b4be;
+        font-family: 'Oswald', sans-serif;
+        cursor: pointer;
+      }
+
+      #teams-section .tabs .content div.active {
+        color: #414f6b;
+        background-color: #b0b4be;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-decoration-thickness: 2px;
+      }
+
+      #teams-section > div:nth-child(3) #schedule {
+        background-color: rgba(255, 255, 255, 0.4);
+        padding: 0.8rem 1.5rem;
+        display: inline-block;
+        margin: 30px;
+      }
+
+      #teams-section > div:nth-child(3) #schedule h3 {
+        font-family: 'Oswald', sans-serif;
+        text-transform: uppercase;
+        font-weight: 700;
+        font-size: 1.4rem;
+        color: #414f6b;
+      }
+
+      #teams-section > div:nth-child(3) #schedule table td + td {
+        padding-left: 3rem;
+      }
+
+      #teams-section > div:nth-child(3) #schedule table tr.new-month td {
+        padding-top: 2rem;
+      }
+
+      footer {
+        background-color: #414f6b;
+        color: #63769d;
+      }
+
+      footer .content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem;
+        gap: 1rem;
+      }
+
+      @media screen and (max-width: 457px) {
+        header #menu-icon,
+        header #close-icon {
+          display: block;
+        }
+
+        header .content nav {
+          position: fixed;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          width: calc(100vw - 50px);
+          transform: translate(110%);
+          transition: 300ms;
+          background-color: white;
+          box-shadow: -2px 2px 5px 2px rgba(0, 0, 0, 0.4);
+          flex-direction: column;
+          padding: 1rem;
+          box-sizing: border-box;
+          align-items: end;
+        }
+
+        header .content nav.open {
+          transform: translate(0);
+        }
+
+        header .content nav a {
+          color: #414f6b;
+        }
+
+        footer .content {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="content">
+        <div class="logo">
+          <img src="images/logo.png" alt="Site logo image" />
+        </div>
+        <button id="menu-icon">
+          <img src="images/menu-icon.svg" alt="side menu opening icon" />
+        </button>
+        <nav>
+          <button id="close-icon">
+            <img src="images/close-icon.svg" alt="side menu close icon" />
+          </button>
+          <a href="#history-section">01. History</a>
+          <a href="#teams-section">02. Team</a>
+        </nav>
+      </div>
+    </header>
+    <section id="hero-section">
+      <div class="snow-flakes"></div>
+      <div class="content">
+        <img
+          src="images/page-title.png"
+          alt="picture with the text 'LOS ANGELES MOUNTAINS'"
+        />
+      </div>
+      <div class="foreground-mountain"></div>
+    </section>
+    <section id="history-section">
+      <div class="content">
+        <div class="section-heading">
+          <h2>01.</h2>
+          <p>history</p>
+        </div>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin in ante
+          viverra, rutrum erat rutrum, consectetur mi. Proin at maximus est.
+          Nullam purus ex, iaculis sed erat sed, blandit tincidunt quam. Cras
+          scelerisque id quam sed dignissim Pellentesque urna nunc, gravida quis
+          hendrerit ac, tristique ut quam. Vivamus suscipit dignissim tortor nec
+          congue.
+        </p>
+      </div>
+      <div class="carousel">
+        <div class="content">
+          <div class="slides">
+            <div>
+              <img src="images/slide-1.png" alt="man on a cliff" />
+            </div>
+            <div>
+              <img src="images/slide-2.png" alt="Mountain" />
+            </div>
+            <div>
+              <img src="images/slide-1.png" alt="man on a cliff" />
+            </div>
+            <div>
+              <img src="images/slide-2.png" alt="Mountain" />
+            </div>
+          </div>
+          <div class="dots">
+            <button class="active"></button><button></button><button></button
+            ><button></button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section id="teams-section">
+      <div>
+        <div class="content">
+          <div class="section-heading">
+            <h2>02.</h2>
+            <p>climb</p>
+          </div>
+          <p>
+            Cras scelerisque id quam sed dignissim Pellentesque urna nunc,
+            gravida quis hendrerit ac, tristique ut quam. Vivamus suscipit
+            dignissim tortor nec congue.
+          </p>
+        </div>
+      </div>
+      <div class="tabs">
+        <div class="content">
+          <div class="active">Mountain 1</div>
+          <div>Mountain 2</div>
+        </div>
+      </div>
+      <div>
+        <div class="content">
+          <div id="schedule">
+            <h3>schedule</h3>
+            <table>
+              <tr>
+                <td>25 Nov 2016</td>
+                <td>Vestibulum viverra</td>
+              </tr>
+              <tr>
+                <td>28 Nov 2016</td>
+                <td>Vestibulum viverra</td>
+              </tr>
+              <tr class="new-month">
+                <td>18 Dec 2016</td>
+                <td>Vestibulum viverra</td>
+              </tr>
+              <tr class="new-month">
+                <td>7 Jan 2017</td>
+                <td>Vestibulum viverra</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer>
+      <div class="content">
+        <img src="images/footer-logo.png" alt="site logo" class="logo" />
+        <div class="copyright">Copyright 2016. All rights reserved</div>
+      </div>
+    </footer>
+  </body>
+
+  <script>
+    const header = document.querySelector('header');
+    const headerLogo = header.querySelector('.logo img');
+    const carouselSlides = document.querySelectorAll(
+      '#history-section .carousel .slides div'
+    );
+    const carouselButtons = document.querySelectorAll(
+      '#history-section .carousel .dots button'
+    );
+    const tabs = document.querySelectorAll('#teams-section .tabs .content div');
+    const menuBtn = document.querySelector('header #menu-icon');
+    const menu = document.querySelector('header nav');
+    const closeBtn = document.querySelector('header #close-icon');
+    const menuItems = document.querySelectorAll('header nav a');
+    const snowFlakeDiv = document.querySelector('#hero-section .snow-flakes');
+
+    // change sticky header background on scroll
+    document.addEventListener('scroll', checkScrollPosition);
+
+    // close side menu whenever a menu item is selected
+    menuItems.forEach((a) => {
+      a.addEventListener('click', (e) => menu.classList.remove('open'));
+    });
+
+    // toggle carousel buttons
+    carouselButtons.forEach((btn) =>
+      btn.addEventListener('click', (e) => {
+        carouselButtons.forEach((b) => b.classList.remove('active'));
+        btn.classList.add('active');
+      })
+    );
+
+    // toggle 'Mountain 1' and 'Mountain 2' text tabs
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', (e) => {
+        tabs.forEach((t) => t.classList.remove('active'));
+        tab.classList.add('active');
+      });
+    });
+
+    //toggle side menu (in mobile view)
+    menuBtn.addEventListener('click', (e) => menu.classList.add('open'));
+    closeBtn.addEventListener('click', (e) => menu.classList.remove('open'));
+
+    function checkScrollPosition() {
+      if (window.pageYOffset) {
+        header.classList.add('scrolled');
+        headerLogo.src = 'images/logo-full.png';
+      } else {
+        header.classList.remove('scrolled');
+        headerLogo.src = 'images/logo.png';
+      }
+    }
+
+    function getRandom(min, max) {
+      return Math.round(Math.random() * max + min);
+    }
+
+    checkScrollPosition();
+
+    const snowFlakes = new Array(1000).fill(null).map((_) => {
+      const size = getRandom(1, 10);
+      const leftPos = getRandom(1, snowFlakeDiv.offsetWidth);
+      const topPos = getRandom(1, snowFlakeDiv.offsetHeight);
+      const opacity = Math.random().toFixed(2);
+      const flake = document.createElement('span');
+      Object.assign(flake.style, {
+        display: 'block',
+        height: size + 'px',
+        width: size + 'px',
+        borderRadius: '50%',
+        backgroundColor: 'white',
+        opacity: opacity,
+        position: 'absolute',
+        left: leftPos + 'px',
+        top: topPos + 'px',
+        transition: 'all 500ms',
+      });
+
+      flake.dataset.xDirection = getRandom(0, 1) ? 'true' : '';
+      flake.dataset.yDirection = getRandom(0, 1) ? 'true' : '';
+
+      return flake;
+    });
+
+    snowFlakeDiv.append(...snowFlakes);
+
+    // start moving flakes animation
+    const flakeAnimations = snowFlakes.map((flake) =>
+      setInterval(() => {
+        flake.style.left = newLeft(flake);
+        flake.style.top = newTop(flake);
+      }, 502)
+    );
+
+    function newLeft(flake) {
+      let left = parseInt(flake.style.left);
+      if (left <= 0) {
+        flake.dataset.xDirection = 'true';
+      } else if (left >= snowFlakeDiv.offsetWidth) {
+        flake.dataset.xDirection = '';
+      }
+
+      left = left + (flake.dataset.xDirection ? 1 : -1) + 'px';
+
+      flake.style.left = left;
+    }
+
+    function newTop(flake) {
+      let top = parseInt(flake.style.top);
+      if (top <= 0) {
+        flake.dataset.yDirection = 'true';
+      } else if (top >= snowFlakeDiv.offsetHeight) {
+        flake.dataset.yDirection = '';
+      }
+
+      top = top + (flake.dataset.yDirection ? 1 : -1) + 'px';
+
+      flake.style.top = top;
+    }
+  </script>
+</html>
